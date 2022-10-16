@@ -14,26 +14,33 @@ for(var i=0; i<=8; i++){
     }else{
         newCard.css("backgroundColor","yellow");
     }
+    var time = $("<p></p>")
     if(hour>12){
         hour -= 12
+        time.appendTo(newCard).html(hour + ":00 pm");
+    }else if(hour == 12){
+        time.appendTo(newCard).html(hour + ":00 pm");
+    }else{
+        time.appendTo(newCard).html(hour + ":00 am");
     }
-    newCard.addClass(hour);
     newCard.appendTo(".container");
-    $("<p></p>").appendTo(newCard).html(hour);
     $("<p class='event'></p>").appendTo(newCard);
 }
 
-if(false){
-
+for(var i=0; i<=8; i++){
+    if(localStorage.getItem(i) != null && localStorage.getItem(i) != ""){
+        containerEl.children().eq(i).children().last().html(localStorage.getItem(i));
+    }
 }
 
 $(document).ready(function(){
     $(".card").click(function(event){
         var goal = window.prompt("Please enter the event for this hour:")
         var target = $(event.currentTarget);
-        if(goal != null){
+        var index = target.index();
+        if(goal != null && goal != ""){
             target.children().last().html(goal);
+            localStorage.setItem(index, goal);
         }
-        console.log(target.attr("class"));
     });
 });
